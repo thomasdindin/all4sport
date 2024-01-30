@@ -1,5 +1,6 @@
 import 'package:all4sport/Views/PanierScreen.dart';
 import 'package:all4sport/Views/ProfilScreen.dart';
+import 'package:all4sport/Views/SearchScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Services/StateManager.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         '/': (context) =>  HomeScreen(),
         '/panier': (context) => const PanierScreen(),
         '/profile': (context) => const ProfileScreen(),
+        '/recherche' : (context) =>  SearchScreen(),
         '/splashscreen': (context) => const SplashScreen(),
       },
     );

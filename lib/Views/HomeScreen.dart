@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget {
       ),
 
       floatingActionButton: const PanierFAB(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: const BottomBar(selectedTab: 0),
     );
   }

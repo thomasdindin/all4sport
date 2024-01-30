@@ -7,12 +7,14 @@ class PanierScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('Panier'),
+    return const Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: Text('Panier'),
+        ),
       ),
       floatingActionButton: PanierFAB(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: BottomBar(selectedTab: 3),
     );
   }

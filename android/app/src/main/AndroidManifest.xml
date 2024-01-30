@@ -1,6 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.all4sport">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- Permission pour la géolocalisation approximative -->
@@ -9,6 +13,8 @@
     <!-- Permission pour la géolocalisation précise -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <!-- Permission pour la caméra -->
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:label="all4sport"

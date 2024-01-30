@@ -5,13 +5,11 @@ class BottomBar extends StatelessWidget {
   const BottomBar({super.key,required this.selectedTab});
 
 
-
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
       shape: const CircularNotchedRectangle(),
       notchMargin: 6.0,
-      color: Colors.deepOrange,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -25,8 +23,16 @@ class BottomBar extends StatelessWidget {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.person),
+            icon: const Icon(Icons.search),
             isSelected: selectedTab == 1,
+            tooltip: 'Rechercher',
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(context, '/recherche', (route) => false);
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.person),
+            isSelected: selectedTab == 2,
             tooltip: 'Profil',
             onPressed: () {
               Navigator.pushNamedAndRemoveUntil(context, '/profile', (route) => false);
