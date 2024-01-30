@@ -1,19 +1,20 @@
+import 'package:all4sport/Objects/Article.dart';
+
 class Rayon {
-  int _id;
-  String _nom;
-  Article[] _articles;
+  late int id;
+  late String nom;
+  List<Article> produits = [];
 
-  Rayon({required this._id,required this._nom});
+  // Le constructeur principal qui initialise toutes les propriétés.
+  Rayon(this.id, this.nom, this.produits);
 
-  Rayon.fromJson(Map<String, dynamic> json) {
-    this._id = json['id'];
-    this._nom = json['nom'];
+  // Un constructeur nommé fromJSON pour créer une instance à partir d'un JSON.
+  Rayon.fromJSON(Map<String, dynamic> json) {
+    id = json['id'] as int;
+    nom = json['nom'] as String;
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['nom'] = this._nom;
-    return data;
+  void addProduit(Article produit) {
+    produits.add(produit);
   }
-
 }

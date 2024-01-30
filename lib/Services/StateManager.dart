@@ -1,3 +1,4 @@
+import 'package:all4sport/Objects/Rayon.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -13,6 +14,10 @@ class AppState extends ChangeNotifier {
   bool get isOnline => _isOnline;
   Position? get position => _position;
   String get cityName => _cityName;
+  List<Rayon> get rayons => _rayons;
+
+  // Les rayons:
+  List<Rayon> _rayons = [];
 
   // Constructeur privé
   AppState._internal();
@@ -75,4 +80,15 @@ class AppState extends ChangeNotifier {
       return null;
     }
   }
+
+  // Méthode pour obtenir les rayons :
+  void setRayons(List<Rayon> rayons) {
+    _rayons = rayons;
+    notifyListeners();
+  }
+
+  List<Rayon> getRayons() {
+    return _rayons;
+  }
+
 }

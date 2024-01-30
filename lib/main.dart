@@ -21,19 +21,44 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'ALL4SPORT',
-      initialRoute: '/splashscreen',
-      theme: ThemeData(
-        primarySwatch: Colors.deepOrange,
-      ),
-      routes: {
-        '/': (context) =>  HomeScreen(),
-        '/panier': (context) => const PanierScreen(),
-        '/profile': (context) => const ProfileScreen(),
-        '/recherche' : (context) =>  SearchScreen(),
-        '/splashscreen': (context) => const SplashScreen(),
+    return WillPopScope(
+      onWillPop: () async {
+        // Afficher un dialogue de confirmation
+        final shouldClose = await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Confirmation'),
+            content: Text('Voulez-vous vraiment quitter l\'application ?'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text('Non'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text('Oui'),
+              ),
+            ],
+          ),
+        );
+
+        return shouldClose ?? false;
       },
+
+      child: MaterialApp(
+        title: 'ALL4SPORT',
+        initialRoute: '/splashscreen',
+        theme: ThemeData(
+          primarySwatch: Colors.deepOrange,
+        ),
+        routes: {
+          '/': (context) =>  HomeScreen(),
+          '/panier': (context) => const PanierScreen(),
+          '/profile': (context) => const ProfileScreen(),
+          '/recherche' : (context) =>  SearchScreen(),
+          '/splashscreen': (context) => const SplashScreen(),
+        },
+      ),
     );
   }
 }

@@ -1,11 +1,13 @@
+import 'package:all4sport/Objects/Rayon.dart';
+import 'package:all4sport/Views/Components/Article.dart';
 import 'package:all4sport/Views/Components/BottomBar.dart';
 import 'package:all4sport/Views/Components/PanierFab.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../Services/StateManager.dart';
 
 class HomeScreen extends StatelessWidget {
-
   final AppState appState = AppState.getInstance();
   HomeScreen({super.key});
 
@@ -20,20 +22,67 @@ class HomeScreen extends StatelessWidget {
             children: [
               Center(
                 child: SizedBox(
-                  height: 100,
-                    child: Image.asset('assets/images/logov2.png')
-                ),
+                    height: 100,
+                    child: Image.asset('assets/images/logov2.png')),
               ),
               const SizedBox(height: 24),
-              Text(
+              Consumer<AppState>(
+                builder: (context, value, child) {
+                  return ListView.builder(
+                    physics:
+                        NeverScrollableScrollPhysics(), // Important pour éviter le scrolling dans un autre scrollable
+                    shrinkWrap:
+                        true, // Important pour utiliser ListView.builder dans un SingleChildScrollView
+                    itemCount:
+                        appState.rayons.length, // Nombre de rayons à construire
+                    itemBuilder: (context, index) {
+                      // Pour chaque rayon, on crée un widget
+                      Rayon rayon = appState.rayons[index];
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              rayon.nom,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          // Utilisez une hauteur fixe pour le conteneur enveloppant le ListView.builder
+                          SizedBox(
+                            height: 300, // Ajustez la hauteur selon le besoin de votre mise en page
+                            child: ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount: rayon.produits.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Article(
+                                    productName: rayon.produits[index].productName,
+                                    productPrice: rayon.produits[index].productPrice,
+                                    productImage:
+                                        "https://picsum.photos/200",
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
 
-                appState.cityName,
+                        ],
+                      );
+                    },
+                  );
+                },
               )
             ],
           ),
         ),
       ),
-
       floatingActionButton: const PanierFAB(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: const BottomBar(selectedTab: 0),
