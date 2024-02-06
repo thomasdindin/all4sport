@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:all4sport/Objects/Article.dart';
 import 'package:all4sport/Objects/Rayon.dart';
 import 'package:all4sport/Services/api_services.dart';
@@ -19,17 +21,16 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    // Récupérer l'instance de AppState
-    final appState = AppState.getInstance();
+    Future.microtask(() {
+      // Récupérer l'instance de AppState
+      final appState = AppState.getInstance();
 
-    // Vérifier la connectivité internet et la permission de localisation
-    appState.checkInternetConnectivity();
-    appState.checkLocationPermission();
+      // Vérifier la connectivité internet et la permission de localisation
+      appState.checkInternetConnectivity();
+      appState.checkLocationPermission();
 
-    // On récupère le nom de la ville :
-    appState.getCityName();
-
-    _navigateToHome();
+      _navigateToHome();
+    });
   }
 
   Future<List<Article>> getArticles() async {
@@ -64,9 +65,8 @@ class _SplashScreenState extends State<SplashScreen> {
     // Récupérer l'instance de AppState
     final appState = AppState.getInstance();
 
-    // On récupère les rayons :
     setState(() {
-      text = "Chargement des rayons ...";
+      text = "Chargement des données...";
     });
 
     //TODO: Décommenter quand Drodz aura daigné déposer l'api
@@ -80,33 +80,33 @@ class _SplashScreenState extends State<SplashScreen> {
       Rayon(5, "Rayon 5", []),
     ];
 
-    // On récupère les articles:
-    setState(() {
-      text = "Chargement des articles ...";
-    });
-
     //TODO: Décommenter quand Drodz aura daigné déposer l'api
     //List<Article> articles = await getArticles();
 
-    List<Article> articles = [
-      Article("Article 1", "Description de l'article 1", 100, "REF1", 1),
-      Article("Article 2", "Description de l'article 2", 200, "REF2", 2),
-      Article("Article 3", "Description de l'article 3", 300, "REF3", 3),
-      Article("Article 4", "Description de l'article 4", 400, "REF4", 4),
-      Article("Article 5", "Description de l'article 5", 500, "REF5", 5),
-    ];
+    List<Article> articles = [];
+
+    for (int i = 0; i < 100; i++) {
+      Article article =
+          Article("Article $i", "Description $i", i * 100, "$i", i % 5 + 1);
+      articles.add(article);
+    }
 
     // On ajoute les articles aux rayons :
     for (var rayon in rayons) {
       for (var article in articles) {
         if (article.rayonId == rayon.id) {
           rayon.addProduit(article);
+          log("Ajout de l'article ${article.productName} au rayon ${rayon.nom}, ref : ${article.productReference}");
         }
       }
     }
 
     // On ajoute les rayons à l'instance de AppState :
     appState.setRayons(rayons);
+
+    setState(() {
+      text = "Redirection vers l'accueil...";
+    });
 
     if (mounted) {
       Navigator.pushReplacement(
@@ -116,10 +116,6 @@ class _SplashScreenState extends State<SplashScreen> {
                 HomeScreen()), // Remplacez HomeScreen par votre écran d'accueil
       );
     }
-
-    setState(() {
-      text = "Fini de charger !";
-    });
   }
 
   @override

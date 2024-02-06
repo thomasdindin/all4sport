@@ -1,5 +1,5 @@
 import 'package:all4sport/Objects/Rayon.dart';
-import 'package:all4sport/Views/Components/Article.dart';
+import 'package:all4sport/Views/Components/ArticleView.dart';
 import 'package:all4sport/Views/Components/BottomBar.dart';
 import 'package:all4sport/Views/Components/PanierFab.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
                 builder: (context, value, child) {
                   return ListView.builder(
                     physics:
-                        NeverScrollableScrollPhysics(), // Important pour éviter le scrolling dans un autre scrollable
+                        const NeverScrollableScrollPhysics(), // Important pour éviter le scrolling dans un autre scrollable
                     shrinkWrap:
                         true, // Important pour utiliser ListView.builder dans un SingleChildScrollView
                     itemCount:
@@ -53,7 +53,8 @@ class HomeScreen extends StatelessWidget {
                           ),
                           // Utilisez une hauteur fixe pour le conteneur enveloppant le ListView.builder
                           SizedBox(
-                            height: 300, // Ajustez la hauteur selon le besoin de votre mise en page
+                            height:
+                                250, // Ajustez la hauteur selon le besoin de votre mise en page
                             child: ListView.builder(
                               physics: const BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
@@ -62,17 +63,13 @@ class HomeScreen extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 return Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Article(
-                                    productName: rayon.produits[index].productName,
-                                    productPrice: rayon.produits[index].productPrice,
-                                    productImage:
-                                        "https://picsum.photos/200",
+                                  child: ArticleView(
+                                    article: rayon.produits[index],
                                   ),
                                 );
                               },
                             ),
                           ),
-
                         ],
                       );
                     },

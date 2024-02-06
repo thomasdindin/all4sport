@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:all4sport/Views/ArticleScreen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -14,6 +15,7 @@ class _QRScanPageState extends State<QRScanPage> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? controller;
   Barcode? result;
+  bool scan = false;
 
   @override
   void reassemble() {
@@ -23,6 +25,8 @@ class _QRScanPageState extends State<QRScanPage> {
     } else if (Platform.isIOS) {
       controller!.resumeCamera();
     }
+
+    scan = false;
   }
 
   @override
@@ -37,15 +41,6 @@ class _QRScanPageState extends State<QRScanPage> {
               onQRViewCreated: _onQRViewCreated,
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: (result != null)
-                  ? Text(
-                  'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
-                  : Text('Scan a code'),
-            ),
-          )
         ],
       ),
     );
@@ -54,9 +49,16 @@ class _QRScanPageState extends State<QRScanPage> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
-      });
+      if (!scan) {
+        scan = true;
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ArticleScreen(articleRef: scanData.code.toString().trim()),
+          ),
+        );
+      }
     });
   }
 

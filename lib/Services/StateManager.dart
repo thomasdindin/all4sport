@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:all4sport/Objects/Article.dart';
 import 'package:all4sport/Objects/Rayon.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -89,6 +92,19 @@ class AppState extends ChangeNotifier {
 
   List<Rayon> getRayons() {
     return _rayons;
+  }
+
+  Article getArticleByRef(String ref) {
+    for (var rayon in _rayons) {
+      for (var article in rayon.produits) {
+        if (article.productReference == ref) {
+          return article;
+        }
+      }
+    }
+
+    log("Article non trouvé pour la référence $ref");
+    throw Exception('Article non trouvé');
   }
 
 }
