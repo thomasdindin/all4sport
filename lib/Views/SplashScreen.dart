@@ -13,9 +13,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   var text = "";
-
 
   @override
   void initState() {
@@ -30,7 +28,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
     // On récupère le nom de la ville :
     appState.getCityName();
-
 
     _navigateToHome();
   }
@@ -63,7 +60,6 @@ class _SplashScreenState extends State<SplashScreen> {
     return res;
   }
 
-
   _navigateToHome() async {
     // Récupérer l'instance de AppState
     final appState = AppState.getInstance();
@@ -73,14 +69,32 @@ class _SplashScreenState extends State<SplashScreen> {
       text = "Chargement des rayons ...";
     });
 
-    List<Rayon> rayons = await getRayons();
+    //TODO: Décommenter quand Drodz aura daigné déposer l'api
+    // List<Rayon> rayons = await getRayons();
+
+    List<Rayon> rayons = [
+      Rayon(1, "Rayon 1", []),
+      Rayon(2, "Rayon 2", []),
+      Rayon(3, "Rayon 3", []),
+      Rayon(4, "Rayon 4", []),
+      Rayon(5, "Rayon 5", []),
+    ];
 
     // On récupère les articles:
     setState(() {
       text = "Chargement des articles ...";
     });
 
-    List<Article> articles = await getArticles();
+    //TODO: Décommenter quand Drodz aura daigné déposer l'api
+    //List<Article> articles = await getArticles();
+
+    List<Article> articles = [
+      Article("Article 1", "Description de l'article 1", 100, "REF1", 1),
+      Article("Article 2", "Description de l'article 2", 200, "REF2", 2),
+      Article("Article 3", "Description de l'article 3", 300, "REF3", 3),
+      Article("Article 4", "Description de l'article 4", 400, "REF4", 4),
+      Article("Article 5", "Description de l'article 5", 500, "REF5", 5),
+    ];
 
     // On ajoute les articles aux rayons :
     for (var rayon in rayons) {
@@ -97,7 +111,9 @@ class _SplashScreenState extends State<SplashScreen> {
     if (mounted) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()), // Remplacez HomeScreen par votre écran d'accueil
+        MaterialPageRoute(
+            builder: (context) =>
+                HomeScreen()), // Remplacez HomeScreen par votre écran d'accueil
       );
     }
 
@@ -111,12 +127,17 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // Centrer le contenu verticalement
+          mainAxisAlignment:
+              MainAxisAlignment.center, // Centrer le contenu verticalement
           children: [
             Image.asset('assets/images/logov2.png'),
-            const SizedBox(height: 24), // Ajouter un espace entre le logo et l'indicateur de progression
+            const SizedBox(
+                height:
+                    24), // Ajouter un espace entre le logo et l'indicateur de progression
             const CircularProgressIndicator(),
-            const SizedBox(height: 24), // Ajouter un espace entre l'indicateur de progression et le texte
+            const SizedBox(
+                height:
+                    24), // Ajouter un espace entre l'indicateur de progression et le texte
             Text(text),
           ],
         ),

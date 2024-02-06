@@ -27,16 +27,16 @@ class MyApp extends StatelessWidget {
         final shouldClose = await showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Confirmation'),
-            content: Text('Voulez-vous vraiment quitter l\'application ?'),
+            title: const Text('Confirmation'),
+            content: const Text('Voulez-vous vraiment quitter l\'application ?'),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: Text('Non'),
+                child: const Text('Non'),
               ),
               TextButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: Text('Oui'),
+                child: const Text('Oui'),
               ),
             ],
           ),

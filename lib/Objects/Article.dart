@@ -5,15 +5,21 @@ class Article {
   late String _productReference;
   late int _rayonId;
 
-  Article(this._productName, this._productDescription, this._productPrice, this._productReference);
+  Article(this._productName, this._productDescription, this._productPrice,
+      this._productReference, this._rayonId);
 
   // Le constructeur fromJSON doit s'assurer d'initialiser tous les champs.
   Article.fromJSON(Map<String, dynamic> json) {
-    _productName = json['nom'] as String; // Remplacez 'nom' par la clé appropriée du JSON
-    _productDescription = json['description'] as String; // Remplacez 'description' par la clé appropriée du JSON
-    _productPrice = json['prix'] as int; // Remplacez 'prix' par la clé appropriée du JSON
-    _productReference = json['reference'] as String; // Remplacez 'reference' par la clé appropriée du JSON
-    _rayonId = int.parse((json['rayonId'] as String).split('/')[3]); // On récupère le rayonId à partir de l'URL
+    _productName =
+        json['nom'] as String; // Remplacez 'nom' par la clé appropriée du JSON
+    _productDescription = json['description']
+        as String; // Remplacez 'description' par la clé appropriée du JSON
+    _productPrice =
+        json['prix'] as int; // Remplacez 'prix' par la clé appropriée du JSON
+    _productReference = json['reference']
+        as String; // Remplacez 'reference' par la clé appropriée du JSON
+    _rayonId = int.parse((json['rayonId'] as String)
+        .split('/')[3]); // On récupère le rayonId à partir de l'URL
   }
 
   // Les getters restent inchangés
@@ -32,5 +38,4 @@ class Article {
       'productReference': _productReference,
     };
   }
-
 }
