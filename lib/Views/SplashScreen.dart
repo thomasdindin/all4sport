@@ -43,6 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
       articles.add(article);
     }
 
+
     return articles;
   }
 
@@ -69,34 +70,16 @@ class _SplashScreenState extends State<SplashScreen> {
       text = "Chargement des données...";
     });
 
-    //TODO: Décommenter quand Drodz aura daigné déposer l'api
-    // List<Rayon> rayons = await getRayons();
+    List<Rayon> rayons = await getRayons();
 
-    List<Rayon> rayons = [
-      Rayon(1, "Rayon 1", []),
-      Rayon(2, "Rayon 2", []),
-      Rayon(3, "Rayon 3", []),
-      Rayon(4, "Rayon 4", []),
-      Rayon(5, "Rayon 5", []),
-    ];
 
-    //TODO: Décommenter quand Drodz aura daigné déposer l'api
-    //List<Article> articles = await getArticles();
-
-    List<Article> articles = [];
-
-    for (int i = 0; i < 100; i++) {
-      Article article =
-          Article("Article $i", "Description $i", i * 100, "$i", i % 5 + 1);
-      articles.add(article);
-    }
+    List<Article> articles = await getArticles();
 
     // On ajoute les articles aux rayons :
     for (var rayon in rayons) {
       for (var article in articles) {
         if (article.rayonId == rayon.id) {
           rayon.addProduit(article);
-          log("Ajout de l'article ${article.productName} au rayon ${rayon.nom}, ref : ${article.productReference}");
         }
       }
     }

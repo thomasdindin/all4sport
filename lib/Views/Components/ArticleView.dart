@@ -29,14 +29,16 @@ class ArticleView extends StatelessWidget {
             SizedBox(
               height: 150,
               width: 150,
-              child: Image.network("https://picsum.photos/200"),
+              child: Image.network(article.imageUrl),
             ), // Loaded from the network
-            const SizedBox(height: 10),
             Text(
               article.productName,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
+                overflow: TextOverflow.ellipsis,
+
               ),
+
             ),
             const SizedBox(height: 10),
             Text('${(article.productPrice.toString())}€'),

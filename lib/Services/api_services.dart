@@ -12,16 +12,14 @@ class ApiService {
     'Accept': 'application/ld+json',
   };
 
-
   //TODO: Changer ça pour avoir le bon ip. Penser à se connecter sur la 107.
-  final String dynamicIp = "106";
+  final String dynamicIp = "16";
 
   ApiService();
 
   Future<List<dynamic>> get(String table, [int? id]) async {
     try {
       http.Response response;
-
 
       if (id == null) {
         response = await http.get(
@@ -36,19 +34,18 @@ class ApiService {
       }
 
       if (response.statusCode == 200) {
-        // Vérifiez si le body est une liste
+        print(json.decode(response.body));
         var jsonData = json.decode(response.body);
         if (jsonData is List) {
           return jsonData;
         } else if (jsonData is Map && jsonData.containsKey('hydra:member')) {
-          // Si le jsonData est une Map et contient la clé 'hydra:member',
-          // nous retournons cette liste.
           return jsonData['hydra:member'] as List;
         } else {
           throw Exception('Invalid JSON format');
         }
       } else {
-        throw Exception('Failed to load items');
+        throw Exception(
+            'Server error: ${response.statusCode} ${response.reasonPhrase}');
       }
     } on TimeoutException catch (_) {
       throw Exception('Request timed out');
@@ -56,7 +53,6 @@ class ApiService {
       throw Exception('Failed to load items: $e');
     }
   }
-
 
   Future<void> post(String table, Map<String, dynamic> data) async {
     try {

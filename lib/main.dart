@@ -1,18 +1,25 @@
-import 'package:all4sport/Objects/Article.dart';
-import 'package:all4sport/Views/ArticleScreen.dart';
 import 'package:all4sport/Views/PanierScreen.dart';
 import 'package:all4sport/Views/ProfilScreen.dart';
 import 'package:all4sport/Views/SearchScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Services/StateManager.dart';
+import 'Services/PanierState.dart';
 import 'Views/HomeScreen.dart';
 import 'Views/SplashScreen.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => AppState.getInstance(),
+    MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => AppState.getInstance(),
+
+          ),
+          ChangeNotifierProvider(
+              create: (context) => PanierState()
+          ),
+        ],
       child: const MyApp(),
     ),
   );
