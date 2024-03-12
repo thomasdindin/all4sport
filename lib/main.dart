@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'Services/StateManager.dart';
 import 'Services/PanierState.dart';
 import 'Views/HomeScreen.dart';
+import 'Views/LoginScreen.dart';
 import 'Views/SplashScreen.dart';
 
 void main() {
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
           ),
           routes: {
             '/': (context) => HomeScreen(),
+            '/login':(context) => const LoginScreen(),
             '/panier': (context) => const PanierScreen(),
             '/profile': (context) => const ProfileScreen(),
             '/recherche': (context) => SearchScreen(),
