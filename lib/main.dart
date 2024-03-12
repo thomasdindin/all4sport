@@ -1,3 +1,6 @@
+import 'package:all4sport/Services/LocalisationState.dart';
+import 'package:all4sport/Services/NetworkState.dart';
+import 'package:all4sport/Views/LoginScreen.dart';
 import 'package:all4sport/Views/PanierScreen.dart';
 import 'package:all4sport/Views/ProfilScreen.dart';
 import 'package:all4sport/Views/SearchScreen.dart';
@@ -14,8 +17,13 @@ void main() {
         providers: [
           ChangeNotifierProvider(
             create: (context) => AppState.getInstance(),
-
           ),
+          ChangeNotifierProvider(
+              create: (context) => LocationProvider()
+          ),
+          ChangeNotifierProvider(
+              create: (context) => NetworkState.getInstance()
+          ), 
           ChangeNotifierProvider(
               create: (context) => PanierState()
           ),
@@ -33,12 +41,11 @@ class MyApp extends StatelessWidget {
     return WillPopScope(
         onWillPop: () async {
           // Afficher un dialogue de confirmation
-          final shouldClose = await showDialog(
+          final shouldClose = await showDialog<bool>(
             context: context,
             builder: (context) => AlertDialog(
               title: const Text('Confirmation'),
-              content:
-                  const Text('Voulez-vous vraiment quitter l\'application ?'),
+              content: const Text('Voulez-vous vraiment quitter l\'application ?'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
@@ -62,6 +69,7 @@ class MyApp extends StatelessWidget {
           ),
           routes: {
             '/': (context) => HomeScreen(),
+            '/login': (context) => const LoginScreen();
             '/panier': (context) => const PanierScreen(),
             '/profile': (context) => const ProfileScreen(),
             '/recherche': (context) => SearchScreen(),

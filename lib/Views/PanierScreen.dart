@@ -37,11 +37,17 @@ class PanierScreen extends StatelessWidget {
               },
             ),
           ),
-          ElevatedButton(
-              onPressed: () {
-                //TODO: Faire la logique pour valider le panier.
-              },
-              child: Text('Valider le panier'))
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                  onPressed: () {
+                    //TODO: Faire la logique pour valider le panier.
+                  },
+                  child: Text('Valider le panier')),
+            ),
+          )
         ]),
       ),
       bottomNavigationBar: const BottomBar(selectedTab: 3),

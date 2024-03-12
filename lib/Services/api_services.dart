@@ -13,7 +13,7 @@ class ApiService {
   };
 
   //TODO: Changer ça pour avoir le bon ip. Penser à se connecter sur la 107.
-  final String dynamicIp = "16";
+  final String dynamicIp = "12";
 
   ApiService();
 

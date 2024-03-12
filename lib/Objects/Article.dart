@@ -11,7 +11,6 @@ class Article {
 
   // Le constructeur fromJSON doit s'assurer d'initialiser tous les champs.
   Article.fromJSON(Map<String, dynamic> json) {
-    print(json);
     _productName =
         json['nom'] as String; // Remplacez 'nom' par la clé appropriée du JSON
     _productDescription = json['description']
