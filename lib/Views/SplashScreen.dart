@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:all4sport/Objects/Article.dart';
 import 'package:all4sport/Objects/Rayon.dart';
 import 'package:all4sport/Services/api_services.dart';
+import 'package:all4sport/Views/LoginScreen.dart';
 import 'package:flutter/material.dart';
 import '../Services/StateManager.dart';
 import 'HomeScreen.dart';
@@ -16,6 +17,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   var text = "";
+  var IS_LOGGED_IN = false; //TODO: Implémenter la connexion.
 
   @override
   void initState() {
@@ -42,7 +44,6 @@ class _SplashScreenState extends State<SplashScreen> {
       Article article = Article.fromJSON(produit);
       articles.add(article);
     }
-
 
     return articles;
   }
@@ -72,7 +73,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
     List<Rayon> rayons = await getRayons();
 
-
     List<Article> articles = await getArticles();
 
     // On ajoute les articles aux rayons :
@@ -91,12 +91,15 @@ class _SplashScreenState extends State<SplashScreen> {
       text = "Redirection vers l'accueil...";
     });
 
-    if (mounted) {
+    if (mounted && IS_LOGGED_IN) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-            builder: (context) =>
-                HomeScreen()), // Remplacez HomeScreen par votre écran d'accueil
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
     }
   }

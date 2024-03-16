@@ -1,3 +1,4 @@
+import 'package:all4sport/Services/LocalisationState.dart';
 import 'package:all4sport/Views/PanierScreen.dart';
 import 'package:all4sport/Views/ProfilScreen.dart';
 import 'package:all4sport/Views/SearchScreen.dart';
@@ -16,12 +17,8 @@ void main() {
           ChangeNotifierProvider(
             create: (context) => AppState.getInstance(),
           ),
-          ChangeNotifierProvider(
-              create: (context) => LocationProvider()
-          ),
-          ChangeNotifierProvider(
-              create: (context) => NetworkState.getInstance()
-          ),
+
+          ChangeNotifierProvider(create: (context) => LocationProvider()),
           ChangeNotifierProvider(
               create: (context) => PanierState()
           ),

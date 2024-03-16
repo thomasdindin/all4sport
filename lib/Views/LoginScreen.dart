@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:all4sport/Services/api_services.dart';
+import 'package:crypto/crypto.dart';
 
 import 'HomeScreen.dart';
 
@@ -14,7 +17,8 @@ class _LoginScreenState extends State<LoginScreen> {
       _formKey.currentState!.save();
       try {
         final apiService = ApiService();
-        bool success = await apiService.postUser(email, password);
+        var output = sha256.convert(utf8.encode(password)).toString();
+        bool success = await apiService.postUser(email, output);
 
         if (success) {
           setState(() {
