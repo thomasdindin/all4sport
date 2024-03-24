@@ -32,7 +32,7 @@ class PanierArticleView extends StatelessWidget {
               SizedBox(
                 width: 100,
                 height: 100,
-                child: Image.network(article.imageUrl),
+                child: Image.asset("assets/images/"+article.imageUrl),
               ),
               Expanded(
                 child: Padding(

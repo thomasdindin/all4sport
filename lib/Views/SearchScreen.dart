@@ -1,4 +1,5 @@
 import 'package:all4sport/Objects/Article.dart';
+import 'package:all4sport/Services/ProductsState.dart';
 import 'package:all4sport/Services/StateManager.dart';
 import 'package:all4sport/Views/Components/BottomBar.dart';
 import 'package:all4sport/Views/Components/PanierFab.dart';
@@ -15,10 +16,10 @@ class _SearchScreenState extends State<SearchScreen> {
   String _searchText = '';
   String _selectedFilter = 'Tous';
 
-  final AppState appState = AppState.getInstance();
+  final ProductsState productsState = ProductsState.getInstance();
 
   List<Article> _filteredProducts() {
-    final _products = appState.rayons
+    final _products = productsState.rayons
         .map((rayon) => rayon.produits)
         .expand((element) => element)
         .toList();

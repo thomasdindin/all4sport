@@ -1,11 +1,14 @@
 import 'dart:developer';
 
 import 'package:all4sport/Objects/Article.dart';
+import 'package:all4sport/Objects/Entrepot.dart';
 import 'package:all4sport/Objects/Rayon.dart';
+import 'package:all4sport/Services/LocationProvider.dart';
+import 'package:all4sport/Services/PanierState.dart';
+import 'package:all4sport/Services/ProductsState.dart';
 import 'package:all4sport/Services/api_services.dart';
 import 'package:all4sport/Views/LoginScreen.dart';
 import 'package:flutter/material.dart';
-import '../Services/StateManager.dart';
 import 'HomeScreen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -24,13 +27,6 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     Future.microtask(() {
-      // Récupérer l'instance de AppState
-      final appState = AppState.getInstance();
-
-      // Vérifier la connectivité internet et la permission de localisation
-      appState.checkInternetConnectivity();
-      appState.checkLocationPermission();
-
       _navigateToHome();
     });
   }
@@ -63,9 +59,28 @@ class _SplashScreenState extends State<SplashScreen> {
     return res;
   }
 
+  Future<List<Entrepot>> getEntrepots() async {
+    var api = ApiService();
+
+    // On récupère les entrepots :
+    List<dynamic> entrepots = await api.get('entrepots');
+
+    List<Entrepot> res = [];
+    for (var entrepot in entrepots) {
+      Entrepot ent = Entrepot.fromJSON(entrepot);
+      res.add(ent);
+    }
+
+
+    return res;
+  }
+
   _navigateToHome() async {
     // Récupérer l'instance de AppState
-    final appState = AppState.getInstance();
+    final PanierState panierState = PanierState.getInstance();
+    final ProductsState productsState = ProductsState.getInstance();
+    final LocationProvider locationProvider = LocationProvider.getInstance();
+    locationProvider.determinePosition();
 
     setState(() {
       text = "Chargement des données...";
@@ -74,6 +89,8 @@ class _SplashScreenState extends State<SplashScreen> {
     List<Rayon> rayons = await getRayons();
 
     List<Article> articles = await getArticles();
+
+    List<Entrepot> entrepots = await getEntrepots();
 
     // On ajoute les articles aux rayons :
     for (var rayon in rayons) {
@@ -84,8 +101,11 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     }
 
+    // On ajoute les entrepots à l'instance de ProductsState :
+    productsState.entrepots = entrepots;
+
     // On ajoute les rayons à l'instance de AppState :
-    appState.setRayons(rayons);
+    productsState.setRayons(rayons);
 
     setState(() {
       text = "Redirection vers l'accueil...";

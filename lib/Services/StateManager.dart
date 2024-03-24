@@ -9,7 +9,7 @@ import 'package:geolocator/geolocator.dart';
 import 'geolocator.dart';
 
 class AppState extends ChangeNotifier {
-  static final AppState _instance = AppState._internal();
+
 
   bool _isOnline = false;
   Position? _position;
@@ -17,18 +17,12 @@ class AppState extends ChangeNotifier {
   bool get isOnline => _isOnline;
   Position? get position => _position;
   String get cityName => _cityName;
-  List<Rayon> get rayons => _rayons;
+
 
   // Les rayons:
   List<Rayon> _rayons = [];
 
-  // Constructeur privé
-  AppState._internal();
 
-  // Méthode pour obtenir l'instance unique
-  static AppState getInstance() {
-    return _instance;
-  }
 
   // Méthode pour vérifier la connexion à Internet
   void checkInternetConnectivity() {
@@ -84,27 +78,5 @@ class AppState extends ChangeNotifier {
     }
   }
 
-  // Méthode pour obtenir les rayons :
-  void setRayons(List<Rayon> rayons) {
-    _rayons = rayons;
-    notifyListeners();
-  }
-
-  List<Rayon> getRayons() {
-    return _rayons;
-  }
-
-  Article getArticleByRef(String ref) {
-    for (var rayon in _rayons) {
-      for (var article in rayon.produits) {
-        if (article.productReference == ref) {
-          return article;
-        }
-      }
-    }
-
-    log("Article non trouvé pour la référence $ref");
-    throw Exception('Article non trouvé');
-  }
 
 }

@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:all4sport/Objects/Rayon.dart';
+import 'package:all4sport/Services/ProductsState.dart';
 import 'package:all4sport/Views/Components/ArticleView.dart';
 import 'package:all4sport/Views/Components/BottomBar.dart';
 import 'package:all4sport/Views/Components/PanierFab.dart';
@@ -8,7 +11,6 @@ import 'package:provider/provider.dart';
 import '../Services/StateManager.dart';
 
 class HomeScreen extends StatelessWidget {
-  final AppState appState = AppState.getInstance();
   HomeScreen({super.key});
 
   @override
@@ -26,18 +28,18 @@ class HomeScreen extends StatelessWidget {
                     child: Image.asset('assets/images/logov2.png')),
               ),
               const SizedBox(height: 24),
-              Consumer<AppState>(
-                builder: (context, value, child) {
+              Consumer<ProductsState>(
+                builder: (context, productsState, child) {
                   return ListView.builder(
                     physics:
                         const NeverScrollableScrollPhysics(), // Important pour éviter le scrolling dans un autre scrollable
                     shrinkWrap:
                         true, // Important pour utiliser ListView.builder dans un SingleChildScrollView
                     itemCount:
-                        appState.rayons.length, // Nombre de rayons à construire
+                        productsState.rayons.length, // Nombre de rayons à construire
                     itemBuilder: (context, index) {
                       // Pour chaque rayon, on crée un widget
-                      Rayon rayon = appState.rayons[index];
+                      Rayon rayon = productsState.rayons[index];
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

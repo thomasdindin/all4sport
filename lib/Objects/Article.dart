@@ -1,4 +1,5 @@
 class Article {
+  late int _id;
   late String _productName;
   late String _productDescription;
   late int _productPrice;
@@ -6,11 +7,12 @@ class Article {
   late int _rayonId;
   late String _imageUrl;
 
-  Article(this._productName, this._productDescription, this._productPrice,
+  Article(this._id, this._productName, this._productDescription, this._productPrice,
       this._productReference, this._rayonId);
 
   // Le constructeur fromJSON doit s'assurer d'initialiser tous les champs.
   Article.fromJSON(Map<String, dynamic> json) {
+    _id = json['id'] as int; // Remplacez 'id' par la clé appropriée du JSON
     _productName =
         json['nom'] as String; // Remplacez 'nom' par la clé appropriée du JSON
     _productDescription = json['description']
@@ -26,6 +28,7 @@ class Article {
   }
 
   // Les getters restent inchangés
+  int get id => _id;
   String get productName => _productName;
   String get productDescription => _productDescription;
   int get productPrice => _productPrice;
@@ -36,6 +39,7 @@ class Article {
   // La méthode toJSON reste inchangée
   Map<String, dynamic> toJSON() {
     return {
+      'id': _id,
       'productName': _productName,
       'productDescription': _productDescription,
       'productPrice': _productPrice,

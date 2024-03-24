@@ -13,7 +13,7 @@ class ApiService {
   };
 
   //TODO: Changer ça pour avoir le bon ip. Penser à se connecter sur la 107.
-  final String dynamicIp = "15";
+  final String dynamicIp = "17";
 
   ApiService();
 
@@ -125,9 +125,10 @@ class ApiService {
   }
 
   Future<bool> postUser(String email, String mdp) async {
+    log("TRYING TO CONNECT ON http://$baseIp.$dynamicIp:8000$baseApiUrl"+"mail");
     try {
       final response = await http.post(
-        Uri.parse("http://$baseIp.$dynamicIp:$port$baseApiUrl"+"mail"),
+        Uri.parse("http://$baseIp.$dynamicIp:8000$baseApiUrl"+"mail"),
         body: jsonEncode({'email': email, 'mdp': mdp}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

@@ -1,28 +1,28 @@
-import 'package:all4sport/Services/LocalisationState.dart';
+import 'package:all4sport/Services/LocationProvider.dart';
+import 'package:all4sport/Services/ProductsState.dart';
+import 'package:all4sport/Services/UserProvider.dart';
 import 'package:all4sport/Views/PanierScreen.dart';
 import 'package:all4sport/Views/ProfilScreen.dart';
 import 'package:all4sport/Views/SearchScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'Services/StateManager.dart';
 import 'Services/PanierState.dart';
 import 'Views/HomeScreen.dart';
-import 'Views/LoginScreen.dart';
 import 'Views/SplashScreen.dart';
 
 void main() {
   runApp(
     MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (context) => LocationProvider.getInstance()),
           ChangeNotifierProvider(
-            create: (context) => AppState.getInstance(),
+              create: (context) => PanierState.getInstance()
           ),
-
-          ChangeNotifierProvider(create: (context) => LocationProvider()),
-          ChangeNotifierProvider(
-              create: (context) => PanierState()
-          ),
+          ChangeNotifierProvider(create: (context) => ProductsState.getInstance()),
+          ChangeNotifierProvider(create: (context) => LocationProvider.getInstance()),
+          ChangeNotifierProvider(create: (context) => UserProvider.getInstance()),
         ],
+
       child: const MyApp(),
     ),
   );

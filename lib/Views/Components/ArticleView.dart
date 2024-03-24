@@ -29,7 +29,7 @@ class ArticleView extends StatelessWidget {
             SizedBox(
               height: 150,
               width: 150,
-              child: Image.network(article.imageUrl),
+              child: Image.asset("assets/images/"+article.imageUrl),
             ), // Loaded from the network
             Text(
               article.productName,

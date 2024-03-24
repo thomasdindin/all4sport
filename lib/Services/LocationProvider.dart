@@ -1,19 +1,29 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
 class LocationProvider extends ChangeNotifier {
+
+  static final LocationProvider _instance = LocationProvider._internal();
+
+  // Constructeur privé
+  LocationProvider._internal();
+
+  // Méthode pour obtenir l'instance unique
+  static LocationProvider getInstance() {
+    return _instance;
+  }
+
   String _cityName = "";
   Position? _currentPosition;
   String get cityName => _cityName;
   Position? get currentPosition => _currentPosition;
 
-  LocationProvider() {
-    _determinePosition();
-  }
 
 
-  Future<void> _determinePosition() async {
+  Future<void> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
